@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ДЗ для 3Л класса</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      :root {
+        --bg: #f0f2f8;
+        --surface: #ffffff;
+        --text-primary: #1a1d2e;
+        --text-secondary: #6b7280;
+        --border: #e5e7eb;
+        --accent: #6c63ff;
+        --accent-light: #ede9fe;
+        --shadow: 0 4px 24px rgba(108,99,255,0.08);
+      }
+      [data-theme="dark"] {
+        --bg: #12141f;
+        --surface: #1e2130;
+        --text-primary: #f1f3f9;
+        --text-secondary: #9ca3af;
+        --border: #2d3148;
+        --accent: #7c6aff;
+        --accent-light: #2d2a4a;
+        --shadow: 0 4px 24px rgba(0,0,0,0.4);
+      }
+      body {
+        font-family: 'Open Sans', sans-serif;
+        background: var(--bg);
+        color: var(--text-primary);
+        min-height: 100vh;
+        transition: background 0.3s, color 0.3s;
+      }
+      #root { min-height: 100vh; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
