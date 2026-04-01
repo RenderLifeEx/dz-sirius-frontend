@@ -62,7 +62,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.SSH_PORT }}
+          port: ${{ secrets.PORT }}
           script: |
             cd /var/www/${{ secrets.FRONTEND_FOLDER}}
             rm -rf *
