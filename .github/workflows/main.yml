@@ -52,7 +52,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.SSH_PORT }}
+          port: ${{ secrets.PORT }}
           source: build-front.tar.bz2
           target: ~/uploads/
 
