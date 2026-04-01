@@ -1,6 +1,8 @@
 name: Deploy dz-sirius-frontend to production server
 on:
   push:
+    branches:
+      - master
     tags:
       - '**-prod**'
 
