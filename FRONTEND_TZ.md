@@ -2,7 +2,7 @@
 
 ## Стек
 
-- React (Vite)
+- React (Vite + TypeScript)
 - [StyleX](https://stylexjs.com/) — все стили только через StyleX, никаких CSS-файлов и inline-стилей
 
 ---
