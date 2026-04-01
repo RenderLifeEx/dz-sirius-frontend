@@ -42,6 +42,7 @@ jobs:
         run: pnpm build
         env:
           VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+          VITE_API_PREFIX: ${{ secrets.VITE_API_PREFIX }}
 
       - name: Create BZIP deployment package
         run: tar -cjf build-front.tar.bz2 dist/*
