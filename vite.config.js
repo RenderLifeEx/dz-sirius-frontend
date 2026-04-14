@@ -25,7 +25,8 @@ export default defineConfig(({ mode }) => ({
       },
     }),
     legacy({
-      targets: ['chrome >= 71', 'not dead'],
+      targets: ['chrome >= 60', 'not dead'],
+      additionalLegacyPolyfills: ['core-js/stable'],
       renderModernChunks: false, // TODO: включить обратно после проверки на старых планшетах
     }),
   ],
