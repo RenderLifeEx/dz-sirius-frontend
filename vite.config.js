@@ -26,6 +26,7 @@ export default defineConfig(({ mode }) => ({
     }),
     legacy({
       targets: ['chrome >= 71', 'not dead'],
+      renderModernChunks: false, // TODO: включить обратно после проверки на старых планшетах
     }),
   ],
 }))
