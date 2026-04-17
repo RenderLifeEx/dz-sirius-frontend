@@ -21,6 +21,18 @@ function formatDate(date) {
   return `${day} ${dd}.${mm} в ${hh}:${min}`
 }
 
+function getPeriodStart() {
+  const now = new Date()
+  const day = now.getDay() // 0=вс, 5=пт, 6=сб
+  let daysBack = 0
+  if (day === 6) daysBack = 1  // сб → пятница
+  if (day === 0) daysBack = 2  // вс → пятница
+  const start = new Date(now)
+  start.setDate(start.getDate() - daysBack)
+  start.setHours(0, 0, 0, 0)
+  return start
+}
+
 function formatTimeLeft(msLeft) {
   if (msLeft <= 0) return 'уже отправляется'
   const totalSec = Math.floor(msLeft / 1000)
@@ -189,9 +201,8 @@ export default function NotificationPanel() {
       const target = parseScheduledAt(scheduledAt)
       const now = Date.now()
       const msLeft = target.getTime() - now
-      const startOfDay = new Date(target)
-      startOfDay.setHours(0, 0, 0, 0)
-      const totalMs = target.getTime() - startOfDay.getTime()
+      const periodStart = getPeriodStart()
+      const totalMs = target.getTime() - periodStart.getTime()
       if (totalMs <= 0) { setProgress(1); setTimeLeft('уже отправляется'); return }
       const pct = Math.min(1, Math.max(0, 1 - msLeft / totalMs))
       setProgress(pct)

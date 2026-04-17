@@ -1,5 +1,6 @@
 import * as stylex from '@stylexjs/stylex'
 import { ThemeContext, useThemeProvider } from './theme.js'
+import { useVersionCheck } from './useVersionCheck.js'
 import ThemeToggle from './components/ThemeToggle.jsx'
 import NotificationPanel from './components/NotificationPanel.jsx'
 import HomeworkList from './components/HomeworkList.jsx'
@@ -49,6 +50,7 @@ const s = stylex.create({
 
 export default function App() {
   const themeValue = useThemeProvider()
+  useVersionCheck()
 
   return (
     <ThemeContext.Provider value={themeValue}>
