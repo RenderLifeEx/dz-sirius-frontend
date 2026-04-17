@@ -15,7 +15,6 @@ const s = stylex.create({
   section: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '16px',
   },
   sectionTitle: {
     fontSize: '13px',
@@ -23,6 +22,7 @@ const s = stylex.create({
     color: 'var(--text-secondary)',
     textTransform: 'uppercase',
     letterSpacing: '0.07em',
+    marginBottom: '16px',
   },
   empty: {
     background: 'var(--surface)',
@@ -40,15 +40,17 @@ const s = stylex.create({
     boxShadow: 'var(--shadow)',
     display: 'flex',
     flexDirection: 'column',
-    gap: '16px',
+    marginBottom: '16px',
+    ':last-child': { marginBottom: '0' },
   },
   dayHeader: {
     display: 'flex',
     alignItems: 'center',
-    gap: '10px',
+    marginBottom: '16px',
   },
   dayIcon: {
     fontSize: '20px',
+    marginRight: '10px',
   },
   dayTitle: {
     fontSize: '16px',
@@ -61,17 +63,18 @@ const s = stylex.create({
     background: 'var(--border)',
     border: 'none',
     margin: '0',
+    marginBottom: '16px',
   },
   taskList: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '10px',
     listStyle: 'none',
   },
   taskItem: {
     display: 'flex',
     alignItems: 'flex-start',
-    gap: '10px',
+    marginBottom: '10px',
+    ':last-child': { marginBottom: '0' },
   },
   bullet: {
     width: '8px',
@@ -80,6 +83,7 @@ const s = stylex.create({
     background: 'var(--accent)',
     flexShrink: '0',
     marginTop: '6px',
+    marginRight: '10px',
   },
   taskText: {
     fontSize: '15px',

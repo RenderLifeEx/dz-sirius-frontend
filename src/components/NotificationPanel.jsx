@@ -55,7 +55,12 @@ const s = stylex.create({
     boxShadow: 'var(--shadow)',
     display: 'flex',
     flexDirection: 'column',
-    gap: '16px',
+  },
+  labelRow: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: '16px',
   },
   label: {
     fontSize: '13px',
@@ -64,14 +69,28 @@ const s = stylex.create({
     textTransform: 'uppercase',
     letterSpacing: '0.07em',
   },
+  pollSpinner: {
+    width: '14px',
+    height: '14px',
+    border: '2px solid var(--border)',
+    borderTopColor: 'var(--accent)',
+    borderRadius: '50%',
+    animationName: stylex.keyframes({
+      to: { transform: 'rotate(360deg)' },
+    }),
+    animationDuration: '0.8s',
+    animationTimingFunction: 'linear',
+    animationIterationCount: 'infinite',
+  },
   dateRow: {
     display: 'flex',
     alignItems: 'center',
-    gap: '10px',
+    marginBottom: '16px',
   },
   calIcon: {
     fontSize: '22px',
     flexShrink: '0',
+    marginRight: '10px',
   },
   dateText: {
     fontSize: '17px',
@@ -84,6 +103,7 @@ const s = stylex.create({
     borderRadius: '99px',
     background: 'var(--border)',
     overflow: 'hidden',
+    marginBottom: '16px',
   },
   barFill: {
     height: '100%',
@@ -118,17 +138,23 @@ export default function NotificationPanel() {
   const [showModal, setShowModal] = useState(false)
   const [toast, setToast] = useState(null)
   const [progress, setProgress] = useState(0)
+  const [polling, setPolling] = useState(false)
   const timerRef = useRef(null)
   const tickRef = useRef(null)
 
   async function poll() {
-    try {
-      const data = await fetchNextNotification()
-      setScheduledAt(data.scheduledAt || null)
+    setPolling(true)
+    const [result] = await Promise.allSettled([
+      fetchNextNotification(),
+      new Promise(resolve => setTimeout(resolve, 3000)),
+    ])
+    if (result.status === 'fulfilled') {
+      setScheduledAt(result.value.scheduledAt || null)
       setError(null)
-    } catch (e) {
-      setError(e.message)
+    } else {
+      setError(result.reason.message)
     }
+    setPolling(false)
   }
 
   useEffect(() => {
@@ -172,7 +198,10 @@ export default function NotificationPanel() {
   return (
     <>
       <div {...stylex.props(s.panel)}>
-        <span {...stylex.props(s.label)}>Следующая отправка</span>
+        <div {...stylex.props(s.labelRow)}>
+          <span {...stylex.props(s.label)}>Следующая отправка</span>
+          {polling && <span {...stylex.props(s.pollSpinner)} />}
+        </div>
 
         {error && <p {...stylex.props(s.errorText)}>{error}</p>}
 

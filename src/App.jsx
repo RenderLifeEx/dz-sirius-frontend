@@ -17,7 +17,9 @@ const s = stylex.create({
     maxWidth: '800px',
     display: 'flex',
     flexDirection: 'column',
-    gap: '20px',
+  },
+  containerItem: {
+    marginBottom: '20px',
   },
   header: {
     display: 'flex',
@@ -28,7 +30,6 @@ const s = stylex.create({
   titleGroup: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '2px',
   },
   eyebrow: {
     fontSize: '12px',
@@ -36,6 +37,7 @@ const s = stylex.create({
     color: 'var(--accent)',
     textTransform: 'uppercase',
     letterSpacing: '0.1em',
+    marginBottom: '2px',
   },
   title: {
     fontSize: '26px',
@@ -52,7 +54,7 @@ export default function App() {
     <ThemeContext.Provider value={themeValue}>
       <div {...stylex.props(s.layout)}>
         <div {...stylex.props(s.container)}>
-          <header {...stylex.props(s.header)}>
+          <header {...stylex.props(s.header, s.containerItem)}>
             <div {...stylex.props(s.titleGroup)}>
               <span {...stylex.props(s.eyebrow)}>3Л класс</span>
               <h1 {...stylex.props(s.title)}>Домашнее задание</h1>
@@ -60,7 +62,7 @@ export default function App() {
             <ThemeToggle />
           </header>
 
-          <NotificationPanel />
+          <div {...stylex.props(s.containerItem)}><NotificationPanel /></div>
           <HomeworkList />
         </div>
       </div>

@@ -23,13 +23,13 @@ const s = stylex.create({
     boxShadow: 'var(--shadow)',
     display: 'flex',
     flexDirection: 'column',
-    gap: '20px',
   },
   title: {
     fontSize: '18px',
     fontWeight: '700',
     color: 'var(--text-primary)',
     textAlign: 'center',
+    marginBottom: '20px',
   },
   input: {
     width: '100%',
@@ -42,6 +42,7 @@ const s = stylex.create({
     fontFamily: 'inherit',
     outline: 'none',
     transition: 'border-color 0.2s',
+    marginBottom: '20px',
     ':focus': {
       borderColor: 'var(--accent)',
     },
@@ -56,11 +57,11 @@ const s = stylex.create({
     color: '#ef4444',
     fontSize: '14px',
     textAlign: 'center',
-    marginTop: '-8px',
+    marginTop: '-12px',
+    marginBottom: '20px',
   },
   actions: {
     display: 'flex',
-    gap: '12px',
   },
   btnCancel: {
     flex: '1',
@@ -74,6 +75,7 @@ const s = stylex.create({
     fontFamily: 'inherit',
     cursor: 'pointer',
     transition: 'background 0.2s',
+    marginRight: '12px',
     ':hover': {
       background: 'var(--border)',
     },
@@ -93,7 +95,6 @@ const s = stylex.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: '8px',
     ':hover': {
       opacity: '0.88',
     },
@@ -111,6 +112,7 @@ const s = stylex.create({
     border: '2px solid rgba(255,255,255,0.3)',
     borderTopColor: '#fff',
     borderRadius: '50%',
+    marginRight: '8px',
     animationName: stylex.keyframes({
       to: { transform: 'rotate(360deg)' },
     }),
