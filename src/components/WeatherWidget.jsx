@@ -55,16 +55,18 @@ const s = stylex.create({
 
 export default function WeatherWidget() {
   const [weather, setWeather] = useState(null)
+  const [fetchError, setFetchError] = useState(false)
 
   function fetchWeather() {
-    if (!window.fetch) return
+    if (!window.fetch) { setFetchError(true); return }
     window.fetch(URL)
       .then(function(res) {
         if (!res.ok) return null
         return res.json()
       })
       .then(function(data) {
-        if (!data) return
+        if (!data) { setFetchError(true); return }
+        setFetchError(false)
         // index 1 = tomorrow
         setWeather({
           max: Math.round(data.daily.temperature_2m_max[1]),
@@ -72,16 +74,25 @@ export default function WeatherWidget() {
           code: data.daily.weathercode[1],
         })
       })
-      .catch(function() {})
+      .catch(function() { setFetchError(true) })
   }
 
-  useEffect(() => {
+  useEffect(function() {
     fetchWeather()
-    const interval = setInterval(fetchWeather, POLL_INTERVAL_MS)
-    return () => clearInterval(interval)
+    var interval = setInterval(fetchWeather, POLL_INTERVAL_MS)
+    return function() { clearInterval(interval) }
   }, [])
 
-  if (!weather) return null
+  if (!weather && !fetchError) return null
+  if (fetchError) return (
+    <div {...stylex.props(s.widget)}>
+      <span {...stylex.props(s.icon)}>🌡️</span>
+      <div {...stylex.props(s.temps)}>
+        <span {...stylex.props(s.tempDay)}>—°</span>
+        <span {...stylex.props(s.tempNight)}>—°</span>
+      </div>
+    </div>
+  )
 
   return (
     <div {...stylex.props(s.widget)}>
