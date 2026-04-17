@@ -40,13 +40,24 @@ const s = stylex.create({
     letterSpacing: '0.1em',
     marginBottom: '2px',
   },
+  titleRow: {
+    display: 'flex',
+    alignItems: 'baseline',
+  },
   title: {
     fontSize: '26px',
     fontWeight: '700',
     color: 'var(--text-primary)',
     lineHeight: '1.2',
+    marginRight: '8px',
+  },
+  version: {
+    fontSize: '11px',
+    fontWeight: '400',
+    color: 'var(--text-secondary)',
   },
 })
+
 
 export default function App() {
   const themeValue = useThemeProvider()
@@ -59,7 +70,10 @@ export default function App() {
           <header {...stylex.props(s.header, s.containerItem)}>
             <div {...stylex.props(s.titleGroup)}>
               <span {...stylex.props(s.eyebrow)}>3Л класс</span>
-              <h1 {...stylex.props(s.title)}>Домашнее задание</h1>
+              <div {...stylex.props(s.titleRow)}>
+                <h1 {...stylex.props(s.title)}>Домашнее задание</h1>
+                <span {...stylex.props(s.version)}>{__APP_LABEL__}</span>
+              </div>
             </div>
             <ThemeToggle />
           </header>
