@@ -2,6 +2,7 @@ import * as stylex from '@stylexjs/stylex'
 import { ThemeContext, useThemeProvider } from './theme.js'
 import { useVersionCheck } from './useVersionCheck.js'
 import ThemeToggle from './components/ThemeToggle.jsx'
+import WeatherWidget from './components/WeatherWidget.jsx'
 import NotificationPanel from './components/NotificationPanel.jsx'
 import HomeworkList from './components/HomeworkList.jsx'
 
@@ -27,6 +28,10 @@ const s = stylex.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingTop: '8px',
+  },
+  headerActions: {
+    display: 'flex',
+    alignItems: 'center',
   },
   titleGroup: {
     display: 'flex',
@@ -75,7 +80,10 @@ export default function App() {
                 <span {...stylex.props(s.version)}>{__APP_LABEL__}</span>
               </div>
             </div>
-            <ThemeToggle />
+            <div {...stylex.props(s.headerActions)}>
+              <WeatherWidget />
+              <ThemeToggle />
+            </div>
           </header>
 
           <div {...stylex.props(s.containerItem)}><NotificationPanel /></div>
