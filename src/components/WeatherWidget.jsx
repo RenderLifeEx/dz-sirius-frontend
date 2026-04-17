@@ -56,18 +56,23 @@ const s = stylex.create({
 export default function WeatherWidget() {
   const [weather, setWeather] = useState(null)
 
-  async function fetchWeather() {
-    try {
-      const res = await fetch(URL)
-      if (!res.ok) return
-      const data = await res.json()
-      // index 1 = tomorrow
-      setWeather({
-        max: Math.round(data.daily.temperature_2m_max[1]),
-        min: Math.round(data.daily.temperature_2m_min[1]),
-        code: data.daily.weathercode[1],
+  function fetchWeather() {
+    if (!window.fetch) return
+    window.fetch(URL)
+      .then(function(res) {
+        if (!res.ok) return null
+        return res.json()
       })
-    } catch {}
+      .then(function(data) {
+        if (!data) return
+        // index 1 = tomorrow
+        setWeather({
+          max: Math.round(data.daily.temperature_2m_max[1]),
+          min: Math.round(data.daily.temperature_2m_min[1]),
+          code: data.daily.weathercode[1],
+        })
+      })
+      .catch(function() {})
   }
 
   useEffect(() => {
