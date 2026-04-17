@@ -26,8 +26,10 @@ const s = stylex.create({
     alignItems: 'center',
     background: 'var(--accent-light)',
     borderRadius: '12px',
-    padding: '6px 12px',
+    padding: '0 12px',
     marginRight: '8px',
+    height: '40px',
+    boxSizing: 'border-box',
   },
   icon: {
     fontSize: '18px',
