@@ -21,6 +21,17 @@ function formatDate(date) {
   return `${day} ${dd}.${mm} в ${hh}:${min}`
 }
 
+function formatTimeLeft(msLeft) {
+  if (msLeft <= 0) return 'уже отправляется'
+  const totalSec = Math.floor(msLeft / 1000)
+  const h = Math.floor(totalSec / 3600)
+  const m = Math.floor((totalSec % 3600) / 60)
+  const s = totalSec % 60
+  if (h > 0) return `${h} ч ${m} мин`
+  if (m > 0) return `${m} мин ${s} сек`
+  return `${s} сек`
+}
+
 function getProgressColor(pct) {
   // 0% green → 50% yellow → 75% orange → 100% red
   if (pct < 0.5) {
@@ -103,6 +114,11 @@ const s = stylex.create({
     borderRadius: '99px',
     background: 'var(--border)',
     overflow: 'hidden',
+    marginBottom: '8px',
+  },
+  timeLeft: {
+    fontSize: '13px',
+    color: 'var(--text-secondary)',
     marginBottom: '16px',
   },
   barFill: {
@@ -138,6 +154,7 @@ export default function NotificationPanel() {
   const [showModal, setShowModal] = useState(false)
   const [toast, setToast] = useState(null)
   const [progress, setProgress] = useState(0)
+  const [timeLeft, setTimeLeft] = useState(null)
   const [polling, setPolling] = useState(false)
   const timerRef = useRef(null)
   const tickRef = useRef(null)
@@ -166,19 +183,19 @@ export default function NotificationPanel() {
   // Update progress bar every second
   useEffect(() => {
     clearInterval(tickRef.current)
-    if (!scheduledAt) { setProgress(0); return }
+    if (!scheduledAt) { setProgress(0); setTimeLeft(null); return }
 
     function tick() {
       const target = parseScheduledAt(scheduledAt)
       const now = Date.now()
       const msLeft = target.getTime() - now
-      // totalMs = time from start of the day to scheduledAt
       const startOfDay = new Date(target)
       startOfDay.setHours(0, 0, 0, 0)
       const totalMs = target.getTime() - startOfDay.getTime()
-      if (totalMs <= 0) { setProgress(1); return }
+      if (totalMs <= 0) { setProgress(1); setTimeLeft('уже отправляется'); return }
       const pct = Math.min(1, Math.max(0, 1 - msLeft / totalMs))
       setProgress(pct)
+      setTimeLeft(formatTimeLeft(msLeft))
     }
 
     tick()
@@ -218,6 +235,10 @@ export default function NotificationPanel() {
             style={{ width: `${pct}%`, backgroundColor: color }}
           />
         </div>
+
+        {timeLeft && (
+          <span {...stylex.props(s.timeLeft)}>осталось {timeLeft}</span>
+        )}
 
         <button {...stylex.props(s.btnSend)} onClick={() => setShowModal(true)}>
           Отправить сейчас
